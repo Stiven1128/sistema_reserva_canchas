@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Horarios | ReservaCanchas</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/dashboard.css">
+    <link rel="stylesheet" href="css/schedule.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- Sidebar -->
+        <aside class="dashboard-sidebar">
+            <div class="sidebar-header">
+                <img src="images/logo.jpg" alt="ReservaCanchas Logo" class="sidebar-logo">
+                <h2>ReservaCanchas</h2>
+            </div>
+            
+            <nav class="sidebar-nav">
+                <ul>
+                    <li>
+                        <a href="dashboard.html">
+                            <i class="fas fa-tachometer-alt"></i>
+                            <span>Dashboard</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="court-types.html">
+                            <i class="fas fa-futbol"></i>
+                            <span>Tipos de Canchas</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="pricing.html">
+                            <i class="fas fa-tag"></i>
+                            <span>Precios por Cancha</span>
+                        </a>
+                    </li>
+                    <li class="active">
+                        <a href="schedule.html">
+                            <i class="fas fa-clock"></i>
+                            <span>Horarios Disponibles</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+            
+            <div class="sidebar-footer">
+                <div class="user-profile">
+                    <img src="images/user-avatar.jpg" alt="Usuario" class="user-avatar">
+                    <div class="user-info">
+                        <span class="user-name">Admin</span>
+                        <span class="user-role">Administrador</span>
+                    </div>
+                </div>
+                <a href="index.html" class="logout-btn">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span>Cerrar Sesión</span>
+                </a>
+            </div>
+        </aside>
+        
+        <main class="dashboard-content">
+            <header class="content-header">
+                <h1><i class="fas fa-clock"></i> Configuración de Horarios Disponibles</h1>
+                <div class="header-actions">
+                    <button class="btn btn-primary" id="add-schedule">
+                        <i class="fas fa-plus"></i> Agregar Horario
+                    </button>
+                </div>
+            </header>
+            
+            <div class="card">
+                <div class="filters">
+                    <div class="filter-group">
+                        <label for="schedule-court-filter">Tipo de Cancha:</label>
+                        <select id="schedule-court-filter" class="form-control">
+                            <option value="">Todos</option>
+                            <option value="1">Fútbol 5</option>
+                            <option value="2">Tenis</option>
+                            <option value="3">Básquetbol</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label for="schedule-day-filter">Día de la semana:</label>
+                        <select id="schedule-day-filter" class="form-control">
+                            <option value="">Todos</option>
+                            <option value="monday">Lunes</option>
+                            <option value="tuesday">Martes</option>
+                            <option value="wednesday">Miércoles</option>
+                            <option value="thursday">Jueves</option>
+                            <option value="friday">Viernes</option>
+                            <option value="saturday">Sábado</option>
+                            <option value="sunday">Domingo</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="table-responsive">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Tipo de Cancha</th>
+                                <th>Día</th>
+                                <th>Horario</th>
+                                <th>Estado</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>1</td>
+                                <td>Fútbol 5</td>
+                                <td>Lunes a Viernes</td>
+                                <td>08:00 - 22:00</td>
+                                <td><span class="badge active">Activo</span></td>
+                                <td>
+                                    <button class="btn-icon edit"><i class="fas fa-edit"></i></button>
+                                    <button class="btn-icon delete"><i class="fas fa-trash"></i></button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>2</td>
+                                <td>Fútbol 5</td>
+                                <td>Sábado y Domingo</td>
+                                <td>09:00 - 20:00</td>
+                                <td><span class="badge active">Activo</span></td>
+                                <td>
+                                    <button class="btn-icon edit"><i class="fas fa-edit"></i></button>
+                                    <button class="btn-icon delete"><i class="fas fa-trash"></i></button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>3</td>
+                                <td>Tenis</td>
+                                <td>Lunes a Domingo</td>
+                                <td>07:00 - 19:00</td>
+                                <td><span class="badge inactive">Inactivo</span></td>
+                                <td>
+                                    <button class="btn-icon edit"><i class="fas fa-edit"></i></button>
+                                    <button class="btn-icon delete"><i class="fas fa-trash"></i></button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </main>
+    </div>
+    
+    <!-- Modal para horarios -->
+    <div class="modal" id="schedule-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="modal-schedule-title">Agregar Horario</h3>
+                <button class="modal-close">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="schedule-form">
+                    <div class="form-group">
+                        <label for="schedule-court-type">Tipo de Cancha</label>
+                        <select id="schedule-court-type" class="form-control" required>
+                            <option value="">Seleccionar...</option>
+                            <option value="1">Fútbol 5</option>
+                            <option value="2">Tenis</option>
+                            <option value="3">Básquetbol</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="schedule-days">Días</label>
+                        <select id="schedule-days" class="form-control" multiple required>
+                            <option value="monday">Lunes</option>
+                            <option value="tuesday">Martes</option>
+                            <option value="wednesday">Miércoles</option>
+                            <option value="thursday">Jueves</option>
+                            <option value="friday">Viernes</option>
+                            <option value="saturday">Sábado</option>
+                            <option value="sunday">Domingo</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="schedule-start-time">Hora de inicio</label>
+                        <input type="time" id="schedule-start-time" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="schedule-end-time">Hora de fin</label>
+                        <input type="time" id="schedule-end-time" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="schedule-status">Estado</label>
+                        <select id="schedule-status" class="form-control">
+                            <option value="active">Activo</option>
+                            <option value="inactive">Inactivo</option>
+                        </select>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-outline modal-cancel">Cancelar</button>
+                <button class="btn btn-primary modal-save">Guardar</button>
+            </div>
+        </div>
+    </div>
+    
+    <script src="js/schedule.js"></script>
+</body>
+</html>

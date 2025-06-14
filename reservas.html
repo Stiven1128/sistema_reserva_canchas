@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestión de Reservas - ReservaCanchas</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="css/reservas.css">
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- Sidebar -->
+        <aside class="dashboard-sidebar">
+            <div class="sidebar-header">
+                <img src="https://via.placeholder.com/60x60/2d5a27/ffffff?text=RC" alt="ReservaCanchas Logo" class="sidebar-logo">
+                <h2>ReservaCanchas</h2>
+            </div>
+            
+            <nav class="sidebar-nav">
+                <ul>
+                    <li>
+                        <a href="dashboard.html">
+                            <i class="fas fa-tachometer-alt"></i>
+                            <span>Dashboard</span>
+                        </a>
+                    </li>
+                    <li class="active">
+                        <a href="reservas.html">
+                            <i class="fas fa-calendar-check"></i>
+                            <span>Gestión de Reservas</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="court-types.html">
+                            <i class="fas fa-futbol"></i>
+                            <span>Tipos de Canchas</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="pricing.html">
+                            <i class="fas fa-tag"></i>
+                            <span>Precios por Cancha</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="schedule.html">
+                            <i class="fas fa-clock"></i>
+                            <span>Horarios Disponibles</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+            
+            <div class="sidebar-footer">
+                <div class="user-profile">
+                    <img src="https://via.placeholder.com/48x48/6b9080/ffffff?text=A" alt="Usuario" class="user-avatar">
+                    <div class="user-info">
+                        <span class="user-name">Admin</span>
+                        <span class="user-role">Administrador</span>
+                    </div>
+                </div>
+                <a href="index.html" class="logout-btn">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span>Cerrar Sesión</span>
+                </a>
+            </div>
+        </aside>
+        
+        <!-- Main Content -->
+        <main class="dashboard-content">
+            <!-- Header -->
+            <div class="content-header">
+                <div>
+                    <h1>Gestión de Reservas</h1>
+                    <p class="header-subtitle">Crea, modifica y gestiona todas tus reservas de canchas</p>
+                </div>
+                <div class="header-actions">
+                    <a href="dashboard.html" class="btn btn-secondary">
+                        <i class="fas fa-arrow-left"></i> Volver al Dashboard
+                    </a>
+                </div>
+            </div>
+
+            <!-- Navegación por tabs -->
+            <div class="tabs-nav">
+                <button class="tab-button active" onclick="showTab('nueva-reserva')">
+                    <i class="fas fa-calendar-plus"></i> Nueva Reserva
+                </button>
+                <button class="tab-button" onclick="showTab('mis-reservas')">
+                    <i class="fas fa-list"></i> Mis Reservas
+                </button>
+            </div>
+
+            <!-- TAB: NUEVA RESERVA -->
+            <div id="nueva-reserva" class="tab-content active">
+                <div class="card">
+                    <div class="card-header">
+                        <h2><i class="fas fa-calendar-plus"></i> Crear Nueva Reserva</h2>
+                    </div>
+                    <div class="card-content">
+                        <form class="reservation-form">
+                            <!-- Sección izquierda: Selección de cancha y detalles -->
+                            <div class="form-section">
+                                <div class="form-group">
+                                    <label for="court-type">Tipo de Cancha</label>
+                                    <select id="court-type" class="form-control">
+                                        <option value="">Selecciona un tipo de cancha</option>
+                                        <option value="futbol-5">Fútbol 5</option>
+                                        <option value="futbol-7">Fútbol 7</option>
+                                        <option value="futbol-11">Fútbol 11</option>
+                                        <option value="tenis">Tenis</option>
+                                        <option value="basquet">Básquet</option>
+                                    </select>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="specific-court">Cancha Específica</label>
+                                    <select id="specific-court" class="form-control">
+                                        <option value="">Primero selecciona el tipo</option>
+                                    </select>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="duration">Duración</label>
+                                    <select id="duration" class="form-control">
+                                        <option value="1">1 hora</option>
+                                        <option value="1.5">1.5 horas</option>
+                                        <option value="2">2 horas</option>
+                                        <option value="3">3 horas</option>
+                                    </select>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="notes">Notas adicionales (opcional)</label>
+                                    <textarea id="notes" class="form-control" rows="3" placeholder="Agrega cualquier comentario o solicitud especial..."></textarea>
+                                </div>
+                            </div>
+
+                            <!-- Sección derecha: Calendario y horarios -->
+                            <div class="form-section">
+                                <div class="form-group">
+                                    <label>Selecciona la fecha</label>
+                                    <div class="calendar-container">
+                                        <div class="calendar-header">
+                                            <button type="button" class="btn btn-secondary">
+                                                <i class="fas fa-chevron-left"></i>
+                                            </button>
+                                            <h3>Enero 2025</h3>
+                                            <button type="button" class="btn btn-secondary">
+                                                <i class="fas fa-chevron-right"></i>
+                                            </button>
+                                        </div>
+                                        <div class="calendar-grid">
+                                            <div class="calendar-day">L</div>
+                                            <div class="calendar-day">M</div>
+                                            <div class="calendar-day">X</div>
+                                            <div class="calendar-day">J</div>
+                                            <div class="calendar-day">V</div>
+                                            <div class="calendar-day">S</div>
+                                            <div class="calendar-day">D</div>
+                                            
+                                            <div class="calendar-day unavailable">1</div>
+                                            <div class="calendar-day unavailable">2</div>
+                                            <div class="calendar-day available">3</div>
+                                            <div class="calendar-day available">4</div>
+                                            <div class="calendar-day available">5</div>
+                                            <div class="calendar-day available">6</div>
+                                            <div class="calendar-day available">7</div>
+                                            
+                                            <div class="calendar-day available">8</div>
+                                            <div class="calendar-day available">9</div>
+                                            <div class="calendar-day available">10</div>
+                                            <div class="calendar-day available">11</div>
+                                            <div class="calendar-day available">12</div>
+                                            <div class="calendar-day selected">13</div>
+                                            <div class="calendar-day available">14</div>
+                                            
+                                            <div class="calendar-day available">15</div>
+                                            <div class="calendar-day available">16</div>
+                                            <div class="calendar-day available">17</div>
+                                            <div class="calendar-day available">18</div>
+                                            <div class="calendar-day available">19</div>
+                                            <div class="calendar-day available">20</div>
+                                            <div class="calendar-day available">21</div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label>Horarios disponibles - 13 de Enero</label>
+                                    <div class="time-slots">
+                                        <div class="time-slot unavailable">08:00</div>
+                                        <div class="time-slot available">09:00</div>
+                                        <div class="time-slot available">10:00</div>
+                                        <div class="time-slot available">11:00</div>
+                                        <div class="time-slot selected">14:00</div>
+                                        <div class="time-slot available">15:00</div>
+                                        <div class="time-slot available">16:00</div>
+                                        <div class="time-slot available">17:00</div>
+                                        <div class="time-slot available">18:00</div>
+                                        <div class="time-slot available">19:00</div>
+                                        <div class="time-slot available">20:00</div>
+                                        <div class="time-slot unavailable">21:00</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+
+                        <!-- Resumen de la reserva -->
+                        <div class="reservation-summary">
+                            <h3 style="margin-bottom: 1rem; color: var(--primary-green);">
+                                <i class="fas fa-clipboard-check"></i> Resumen de tu Reserva
+                            </h3>
+                            <div class="summary-item">
+                                <span class="summary-label">Cancha:</span>
+                                <span class="summary-value">Fútbol 5 - Cancha A</span>
+                            </div>
+                            <div class="summary-item">
+                                <span class="summary-label">Fecha:</span>
+                                <span class="summary-value">13 de Enero, 2025</span>
+                            </div>
+                            <div class="summary-item">
+                                <span class="summary-label">Horario:</span>
+                                <span class="summary-value">14:00 - 15:00</span>
+                            </div>
+                            <div class="summary-item">
+                                <span class="summary-label">Duración:</span>
+                                <span class="summary-value">1 hora</span>
+                            </div>
+                            <div class="summary-item">
+                                <span class="summary-label">Total:</span>
+                                <span class="summary-value">$25.000</span>
+                            </div>
+                        </div>
+
+                        <!-- Botones de acción -->
+                        <div style="display: flex; gap: 1rem; justify-content: flex-end; margin-top: 2rem;">
+                            <button type="button" class="btn btn-secondary">
+                                <i class="fas fa-times"></i> Cancelar
+                            </button>
+                            <button type="submit" class="btn btn-primary" onclick="confirmarReserva()">
+                                <i class="fas fa-check"></i> Confirmar Reserva
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TAB: MIS RESERVAS -->
+            <div id="mis-reservas" class="tab-content">
+                <div class="card">
+                    <div class="card-header">
+                        <h2><i class="fas fa-calendar-check"></i> Mis Reservas</h2>
+                    </div>
+                    <div class="card-content">
+                        <div class="reservations-list">
+                            <!-- Reserva confirmada -->
+                            <div class="reservation-item confirmed">
+                                <div class="reservation-header">
+                                    <div class="reservation-info">
+                                        <h3>Cancha de Fútbol 5 - Cancha A</h3>
+                                        <p class="reservation-date">15 de Enero, 2025</p>
+                                    </div>
+                                    <span class="reservation-status confirmed">Confirmada</span>
+                                </div>
+                                <div class="reservation-details">
+                                    <div class="detail-item">
+                                        <i class="fas fa-clock"></i>
+                                        <span class="detail-label">Horario:</span>
+                                        <span class="detail-value">14:00 - 16:00</span>
+                                    </div>
+                                    <div class="detail-item">
+                                        <i class="fas fa-hourglass-half"></i>
+                                        <span class="detail-label">Duración:</span>
+                                        <span class="detail-value">2 horas</span>
+                                    </div>
+                                    <div class="detail-item">
+                                        <i class="fas fa-dollar-sign"></i>
+                                        <span class="detail-label">Total:</span>
+                                        <span class="detail-value">$50.000</span>
+                                    </div>
+                                    <div class="detail-item">
+                                        <i class="fas fa-calendar"></i>
+                                        <span class="detail-label">Reservado:</span>
+                                        <span class="detail-value">10 de Enero</span>
+                                    </div>
+                                </div>
+                                <div class="reservation-actions">
+                                    <button class="btn btn-warning btn-sm" onclick="openModifyModal()">
+                                        <i class="fas fa-edit"></i> Modificar
+                                    </button>
+                                    <button class="btn btn-danger btn-sm" onclick="openCancelModal()">
+                                        <i class="fas fa-times"></i> Cancelar
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- Reserva pendiente -->
+                            <div class="reservation-item pending">
+                                <div class="reservation-header">
+                                    <div class="reservation-info">
+                                        <h3>Cancha de Tenis - Cancha 1</h3>
+                                        <p class="reservation-date">18 de Enero, 2025</p>
+                                    </div>
+                                    <span class="reservation-status pending">Pendiente</span>
+                                </div>
+                                <div class="reservation-details">
+                                    <div class="detail-item">
+                                        <i class="fas fa-clock"></i>
+                                        <span class="detail-label">Horario:</span>
+                                        <span class="detail-value">10:00 - 11:00</span>
+                                    </div>
+                                    <div class="detail-item">
+                                        <i class="fas fa-hourglass-half"></i>
+                                        <span class="detail-label">Duración:</span>
+                                        <span class="detail-value">1 hora</span>
+                                    </div>
+                                    <div class="detail-item">
+                                        <i class="fas fa-dollar-sign"></i>
+                                        <span class="detail-label">Total:</span>
+                                        <span class="detail-value">$30.000</span>
+                                    </div>
+                                    <div class="detail-item">
+                                        <i class="fas fa-calendar"></i>
+                                        <span class="detail-label">Reservado:</span>
+                                        <span class="detail-value">12 de Enero</span>
+                                    </div>
+                                </div>
+                                <div class="reservation-actions">
+                                    <button class="btn btn-warning btn-sm" onclick="openModifyModal()">
+                                        <i class="fas fa-edit"></i> Modificar
+                                    </button>
+                                    <button class="btn btn-danger btn-sm" onclick="openCancelModal()">
+                                        <i class="fas fa-times"></i> Cancelar
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- Reserva cancelada -->
+                            <div class="reservation-item cancelled">
+                                <div class="reservation-header">
+                                    <div class="reservation-info">
+                                        <h3>Cancha de Básquet - Cancha Principal</h3>
+                                        <p class="reservation-date">12 de Enero, 2025</p>
+                                    </div>
+                                    <span class="reservation-status cancelled">Cancelada</span>
+                                </div>
+                                <div class="reservation-details">
+                                    <div class="detail-item">
+                                        <i class="fas fa-clock"></i>
+                                        <span class="detail-label">Horario:</span>
+                                        <span class="detail-value">16:00 - 18:00</span>
+                                    </div>
+                                    <div class="detail-item">
+                                        <i class="fas fa-hourglass-half"></i>
+                                        <span class="detail-label">Duración:</span>
+                                        <span class="detail-value">2 horas</span>
+                                    </div>
+                                    <div class="detail-item">
+                                        <i class="fas fa-dollar-sign"></i>
+                                        <span class="detail-label">Total:</span>
+                                        <span class="detail-value">$40.000</span>
+                                    </div>
+                                    <div class="detail-item">
+                                        <i class="fas fa-ban"></i>
+                                        <span class="detail-label">Cancelado:</span>
+                                        <span class="detail-value">11 de Enero</span>
+                                    </div>
+                                </div>
+                                <div class="reservation-actions">
+                                    <button class="btn btn-secondary btn-sm" disabled>
+                                        <i class="fas fa-ban"></i> Cancelada
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Modal para modificar reserva -->
+    <div id="modifyModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3><i class="fas fa-edit"></i> Modificar Reserva</h3>
+                <button class="modal-close" onclick="closeModal('modifyModal')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p style="margin-bottom: 1.5rem; color: var(--neutral-medium);">
+                    Selecciona la nueva fecha y horario para tu reserva. Verificaremos la disponibilidad antes de confirmar el cambio.
+                </p>
+                <div style="display: flex; flex-direction: column; gap: 1rem;">
+                    <div>
+                        <label style="display: block; margin-bottom: 0.5rem; font-weight: 600;">Nueva fecha:</label>
+                        <input type="date" class="form-control" value="2025-01-20">
+                    </div>
+                    <div>
+                        <label style="display: block; margin-bottom: 0.5rem; font-weight: 600;">Nuevo horario:</label>
+                        <select class="form-control">
+                            <option value="09:00">09:00 - 11:00</option>
+                            <option value="11:00">11:00 - 13:00</option>
+                            <option value="14:00" selected>14:00 - 16:00</option>
+                            <option value="16:00">16:00 - 18:00</option>
+                            <option value="18:00">18:00 - 20:00</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-actions">
+                <button class="btn btn-secondary" onclick="closeModal('modifyModal')">Cancelar</button>
+                <button class="btn btn-primary" onclick="modificarReserva()">Confirmar Cambios</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal para cancelar reserva -->
+    <div id="cancelModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3><i class="fas fa-exclamation-triangle"></i> Cancelar Reserva</h3>
+                <button class="modal-close" onclick="closeModal('cancelModal')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p style="margin-bottom: 1rem; color: var(--neutral-medium);">
+                    ¿Estás seguro de que deseas cancelar esta reserva?
+                </p>
+                <div style="background: #fee2e2; border: 1px solid #fca5a5; border-radius: var(--border-radius); padding: 1rem; margin-bottom: 1rem;">
+                    <p style="color: #dc2626; font-weight: 500; margin: 0;">
+                        <i class="fas fa-info-circle"></i> Esta acción no se puede deshacer. La reserva será cancelada permanentemente.
+                    </p>
+                </div>
+                <div>
+                    <label style="display: block; margin-bottom: 0.5rem; font-weight: 600;">Motivo de cancelación (opcional):</label>
+                    <textarea class="form-control" rows="3" placeholder="Describe el motivo de la cancelación..."></textarea>
+                </div>
+            </div>
+            <div class="modal-actions">
+                <button class="btn btn-secondary" onclick="closeModal('cancelModal')">No, mantener reserva</button>
+                <button class="btn btn-danger" onclick="cancelarReserva()">Sí, cancelar reserva</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/reservas.js"></script>
+</body>
+</html>

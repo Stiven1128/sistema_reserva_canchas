@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Precios por Cancha | ReservaCanchas</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/dashboard.css">
+    <link rel="stylesheet" href="css/pricing.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- Sidebar -->
+        <aside class="dashboard-sidebar">
+            <div class="sidebar-header">
+                <img src="images/logo.jpg" alt="ReservaCanchas Logo" class="sidebar-logo">
+                <h2>ReservaCanchas</h2>
+            </div>
+            
+            <nav class="sidebar-nav">
+                <ul>
+                    <li>
+                        <a href="dashboard.html">
+                            <i class="fas fa-tachometer-alt"></i>
+                            <span>Dashboard</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="court-types.html">
+                            <i class="fas fa-futbol"></i>
+                            <span>Tipos de Canchas</span>
+                        </a>
+                    </li>
+                    <li class="active">
+                        <a href="pricing.html">
+                            <i class="fas fa-tag"></i>
+                            <span>Precios por Cancha</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="schedule.html">
+                            <i class="fas fa-clock"></i>
+                            <span>Horarios Disponibles</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+            
+            <div class="sidebar-footer">
+                <div class="user-profile">
+                    <img src="images/user-avatar.jpg" alt="Usuario" class="user-avatar">
+                    <div class="user-info">
+                        <span class="user-name">Admin</span>
+                        <span class="user-role">Administrador</span>
+                    </div>
+                </div>
+                <a href="index.html" class="logout-btn">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span>Cerrar Sesión</span>
+                </a>
+            </div>
+        </aside>
+        
+        <main class="dashboard-content">
+            <header class="content-header">
+                <h1><i class="fas fa-tag"></i> Asignación de Precios por Cancha</h1>
+                <div class="header-actions">
+                    <button class="btn btn-primary" id="add-pricing">
+                        <i class="fas fa-plus"></i> Agregar Precio
+                    </button>
+                </div>
+            </header>
+            
+            <div class="card">
+                <div class="filters">
+                    <div class="filter-group">
+                        <label for="court-type-filter">Tipo de Cancha:</label>
+                        <select id="court-type-filter" class="form-control">
+                            <option value="">Todos</option>
+                            <option value="1">Fútbol 5</option>
+                            <option value="2">Tenis</option>
+                            <option value="3">Básquetbol</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label for="day-type-filter">Tipo de Día:</label>
+                        <select id="day-type-filter" class="form-control">
+                            <option value="">Todos</option>
+                            <option value="weekday">Día de semana</option>
+                            <option value="weekend">Fin de semana</option>
+                            <option value="holiday">Feriado</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="table-responsive">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Tipo de Cancha</th>
+                                <th>Horario</th>
+                                <th>Tipo de Día</th>
+                                <th>Precio ($)</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>1</td>
+                                <td>Fútbol 5</td>
+                                <td>08:00 - 10:00</td>
+                                <td><span class="badge weekday">Día de semana</span></td>
+                                <td>$25.00</td>
+                                <td>
+                                    <button class="btn-icon edit"><i class="fas fa-edit"></i></button>
+                                    <button class="btn-icon delete"><i class="fas fa-trash"></i></button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>2</td>
+                                <td>Fútbol 5</td>
+                                <td>18:00 - 20:00</td>
+                                <td><span class="badge weekend">Fin de semana</span></td>
+                                <td>$35.00</td>
+                                <td>
+                                    <button class="btn-icon edit"><i class="fas fa-edit"></i></button>
+                                    <button class="btn-icon delete"><i class="fas fa-trash"></i></button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>3</td>
+                                <td>Tenis</td>
+                                <td>10:00 - 12:00</td>
+                                <td><span class="badge holiday">Feriado</span></td>
+                                <td>$40.00</td>
+                                <td>
+                                    <button class="btn-icon edit"><i class="fas fa-edit"></i></button>
+                                    <button class="btn-icon delete"><i class="fas fa-trash"></i></button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </main>
+    </div>
+    
+    <!-- Modal para precios -->
+    <div class="modal" id="pricing-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="modal-pricing-title">Agregar Precio</h3>
+                <button class="modal-close">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="pricing-form">
+                    <div class="form-group">
+                        <label for="pricing-court-type">Tipo de Cancha</label>
+                        <select id="pricing-court-type" class="form-control" required>
+                            <option value="">Seleccionar...</option>
+                            <option value="1">Fútbol 5</option>
+                            <option value="2">Tenis</option>
+                            <option value="3">Básquetbol</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="pricing-time-range">Horario</label>
+                        <input type="text" id="pricing-time-range" class="form-control" placeholder="Ej: 08:00 - 10:00" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="pricing-day-type">Tipo de Día</label>
+                        <select id="pricing-day-type" class="form-control" required>
+                            <option value="weekday">Día de semana</option>
+                            <option value="weekend">Fin de semana</option>
+                            <option value="holiday">Feriado</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="pricing-amount">Precio ($)</label>
+                        <input type="number" id="pricing-amount" class="form-control" min="0" step="0.01" required>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-outline modal-cancel">Cancelar</button>
+                <button class="btn btn-primary modal-save">Guardar</button>
+            </div>
+        </div>
+    </div>
+    
+    <script src="js/pricing.js"></script>
+</body>
+</html>

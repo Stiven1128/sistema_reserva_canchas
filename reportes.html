@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reportes - ReservaCanchas</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="css/reportes.css">
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- Sidebar -->
+        <aside class="dashboard-sidebar">
+            <div class="sidebar-header">
+                <img src="https://via.placeholder.com/60x60/2d5a27/ffffff?text=RC" alt="ReservaCanchas Logo" class="sidebar-logo">
+                <h2>ReservaCanchas</h2>
+            </div>
+            
+            <nav class="sidebar-nav">
+                <ul>
+                    <li>
+                        <a href="dashboard.html">
+                            <i class="fas fa-tachometer-alt"></i>
+                            <span>Dashboard</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="reservas.html">
+                            <i class="fas fa-calendar-check"></i>
+                            <span>Gestión de Reservas</span>
+                        </a>
+                    </li>
+                    <li class="active">
+                        <a href="reportes.html">
+                            <i class="fas fa-chart-bar"></i>
+                            <span>Reportes</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="court-types.html">
+                            <i class="fas fa-futbol"></i>
+                            <span>Tipos de Canchas</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="pricing.html">
+                            <i class="fas fa-tag"></i>
+                            <span>Precios por Cancha</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="schedule.html">
+                            <i class="fas fa-clock"></i>
+                            <span>Horarios Disponibles</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+            
+            <div class="sidebar-footer">
+                <div class="user-profile">
+                    <img src="https://via.placeholder.com/48x48/6b9080/ffffff?text=A" alt="Usuario" class="user-avatar">
+                    <div class="user-info">
+                        <span class="user-name">Admin</span>
+                        <span class="user-role">Administrador</span>
+                    </div>
+                </div>
+                <a href="index.html" class="logout-btn">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span>Cerrar Sesión</span>
+                </a>
+            </div>
+        </aside>
+        
+        <!-- Main Content -->
+        <main class="dashboard-content">
+            <!-- Header -->
+            <div class="content-header">
+                <div>
+                    <h1>Reportes</h1>
+                    <p class="header-subtitle">Consulta reportes de uso de canchas y facturación</p>
+                </div>
+                <div class="header-actions">
+                    <a href="dashboard.html" class="btn btn-secondary">
+                        <i class="fas fa-arrow-left"></i> Volver al Dashboard
+                    </a>
+                </div>
+            </div>
+
+            <!-- Navegación por tabs -->
+            <div class="tabs-nav">
+                <button class="tab-button active" onclick="showTab('uso-canchas')">
+                    <i class="fas fa-chart-bar"></i> Uso de Canchas
+                </button>
+                <button class="tab-button" onclick="showTab('facturacion')">
+                    <i class="fas fa-dollar-sign"></i> Facturación
+                </button>
+            </div>
+
+            <!-- TAB: REPORTE DE USO DE CANCHAS (HU010) -->
+            <div id="uso-canchas" class="tab-content active">
+                <!-- Filtros -->
+                <div class="filters-section">
+                    <h3 style="margin-bottom: 1.5rem; color: var(--neutral-dark); font-weight: 600;">
+                        <i class="fas fa-filter"></i> Filtros de Búsqueda
+                    </h3>
+                    <div class="filters-grid">
+                        <div class="filter-group">
+                            <label for="fecha-inicio-uso">Fecha de Inicio</label>
+                            <input type="date" id="fecha-inicio-uso" class="form-control" value="2025-01-01">
+                        </div>
+                        <div class="filter-group">
+                            <label for="fecha-fin-uso">Fecha de Fin</label>
+                            <input type="date" id="fecha-fin-uso" class="form-control" value="2025-01-31">
+                        </div>
+                        <div class="filter-group">
+                            <label for="tipo-cancha-uso">Tipo de Cancha</label>
+                            <select id="tipo-cancha-uso" class="form-control">
+                                <option value="">Todos los tipos</option>
+                                <option value="futbol-5">Fútbol 5</option>
+                                <option value="futbol-7">Fútbol 7</option>
+                                <option value="futbol-11">Fútbol 11</option>
+                                <option value="tenis">Tenis</option>
+                                <option value="basquet">Básquet</option>
+                            </select>
+                        </div>
+                        <div class="filter-group">
+                            <label for="cancha-especifica">Cancha Específica</label>
+                            <select id="cancha-especifica" class="form-control">
+                                <option value="">Todas las canchas</option>
+                                <option value="futbol-5-a">Fútbol 5 - Cancha A</option>
+                                <option value="futbol-5-b">Fútbol 5 - Cancha B</option>
+                                <option value="tenis-1">Tenis - Cancha 1</option>
+                                <option value="basquet-principal">Básquet - Principal</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="filters-actions">
+                        <button class="btn btn-secondary" onclick="limpiarFiltrosUso()">
+                            <i class="fas fa-eraser"></i> Limpiar Filtros
+                        </button>
+                        <button class="btn btn-primary" onclick="generarReporteUso()">
+                            <i class="fas fa-search"></i> Generar Reporte
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Estadísticas del reporte -->
+                <div class="report-stats">
+                    <div class="stat-item">
+                        <h3>156</h3>
+                        <p>Total Reservas</p>
+                    </div>
+                    <div class="stat-item">
+                        <h3>12</h3>
+                        <p>Canchas Utilizadas</p>
+                    </div>
+                    <div class="stat-item">
+                        <h3>89%</h3>
+                        <p>Ocupación Promedio</p>
+                    </div>
+                    <div class="stat-item">
+                        <h3>342</h3>
+                        <p>Horas Reservadas</p>
+                    </div>
+                </div>
+
+                <!-- Tabla de reporte -->
+                <div class="card">
+                    <div class="card-header">
+                        <h2><i class="fas fa-table"></i> Reporte de Uso por Cancha</h2>
+                    </div>
+                    <div class="card-content" style="padding: 0;">
+                        <table class="report-table">
+                            <thead>
+                                <tr>
+                                    <th>Cancha</th>
+                                    <th>Tipo</th>
+                                    <th>Total Reservas</th>
+                                    <th>Horas Utilizadas</th>
+                                    <th>% Ocupación</th>
+                                    <th>Día Más Activo</th>
+                                    <th>Horario Pico</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong>Fútbol 5 - Cancha A</strong></td>
+                                    <td><span style="background: #dcfce7; color: #16a34a; padding: 0.25rem 0.5rem; border-radius: 12px; font-size: 0.75rem;">Fútbol 5</span></td>
+                                    <td>45</td>
+                                    <td>90 hrs</td>
+                                    <td><strong style="color: #16a34a;">95%</strong></td>
+                                    <td>Sábado</td>
+                                    <td>18:00 - 20:00</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Fútbol 5 - Cancha B</strong></td>
+                                    <td><span style="background: #dcfce7; color: #16a34a; padding: 0.25rem 0.5rem; border-radius: 12px; font-size: 0.75rem;">Fútbol 5</span></td>
+                                    <td>38</td>
+                                    <td>76 hrs</td>
+                                    <td><strong style="color: #f59e0b;">87%</strong></td>
+                                    <td>Viernes</td>
+                                    <td>19:00 - 21:00</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Tenis - Cancha 1</strong></td>
+                                    <td><span style="background: #dbeafe; color: #2563eb; padding: 0.25rem 0.5rem; border-radius: 12px; font-size: 0.75rem;">Tenis</span></td>
+                                    <td>32</td>
+                                    <td>48 hrs</td>
+                                    <td><strong style="color: #f59e0b;">78%</strong></td>
+                                    <td>Domingo</td>
+                                    <td>10:00 - 12:00</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Básquet - Principal</strong></td>
+                                    <td><span style="background: #fef3c7; color: #d97706; padding: 0.25rem 0.5rem; border-radius: 12px; font-size: 0.75rem;">Básquet</span></td>
+                                    <td>28</td>
+                                    <td>84 hrs</td>
+                                    <td><strong style="color: #16a34a;">92%</strong></td>
+                                    <td>Jueves</td>
+                                    <td>20:00 - 22:00</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Fútbol 7 - Cancha A</strong></td>
+                                    <td><span style="background: #dcfce7; color: #16a34a; padding: 0.25rem 0.5rem; border-radius: 12px; font-size: 0.75rem;">Fútbol 7</span></td>
+                                    <td>13</td>
+                                    <td>44 hrs</td>
+                                    <td><strong style="color: #dc2626;">65%</strong></td>
+                                    <td>Sábado</td>
+                                    <td>16:00 - 18:00</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                    <!-- Acciones de exportación -->
+                    <div class="export-actions">
+                        <button class="btn btn-success" onclick="exportarPDF('uso')">
+                            <i class="fas fa-file-pdf"></i> Exportar PDF
+                        </button>
+                        <button class="btn btn-warning" onclick="exportarExcel('uso')">
+                            <i class="fas fa-file-excel"></i> Exportar Excel
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TAB: REPORTE DE FACTURACIÓN (HU011) -->
+            <div id="facturacion" class="tab-content">
+                <!-- Filtros -->
+                <div class="filters-section">
+                    <h3 style="margin-bottom: 1.5rem; color: var(--neutral-dark); font-weight: 600;">
+                        <i class="fas fa-filter"></i> Filtros de Búsqueda
+                    </h3>
+                    <div class="filters-grid">
+                        <div class="filter-group">
+                            <label for="fecha-inicio-fact">Fecha de Inicio</label>
+                            <input type="date" id="fecha-inicio-fact" class="form-control" value="2025-01-01">
+                        </div>
+                        <div class="filter-group">
+                            <label for="fecha-fin-fact">Fecha de Fin</label>
+                            <input type="date" id="fecha-fin-fact" class="form-control" value="2025-01-31">
+                        </div>
+                        <div class="filter-group">
+                            <label for="tipo-cancha-fact">Tipo de Cancha</label>
+                            <select id="tipo-cancha-fact" class="form-control">
+                                <option value="">Todos los tipos</option>
+                                <option value="futbol-5">Fútbol 5</option>
+                                <option value="futbol-7">Fútbol 7</option>
+                                <option value="futbol-11">Fútbol 11</option>
+                                <option value="tenis">Tenis</option>
+                                <option value="basquet">Básquet</option>
+                            </select>
+                        </div>
+                        <div class="filter-group">
+                            <label for="usuario-fact">Usuario</label>
+                            <select id="usuario-fact" class="form-control">
+                                <option value="">Todos los usuarios</option>
+                                <option value="juan-perez">Juan Pérez</option>
+                                <option value="maria-garcia">María García</option>
+                                <option value="carlos-lopez">Carlos López</option>
+                                <option value="ana-martinez">Ana Martínez</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="filters-actions">
+                        <button class="btn btn-secondary" onclick="limpiarFiltrosFacturacion()">
+                            <i class="fas fa-eraser"></i> Limpiar Filtros
+                        </button>
+                        <button class="btn btn-primary" onclick="generarReporteFacturacion()">
+                            <i class="fas fa-search"></i> Generar Reporte
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Estadísticas del reporte -->
+                <div class="report-stats">
+                    <div class="stat-item">
+                        <h3>$2,450,000</h3>
+                        <p>Total Facturado</p>
+                    </div>
+                    <div class="stat-item">
+                        <h3>156</h3>
+                        <p>Reservas Pagadas</p>
+                    </div>
+                    <div class="stat-item">
+                        <h3>$15,705</h3>
+                        <p>Promedio por Reserva</p>
+                    </div>
+                    <div class="stat-item">
+                        <h3>$79,032</h3>
+                        <p>Ingresos Diarios Prom.</p>
+                    </div>
+                </div>
+
+                <!-- Tabla de reporte -->
+                <div class="card">
+                    <div class="card-header">
+                        <h2><i class="fas fa-table"></i> Reporte de Facturación por Reservas</h2>
+                    </div>
+                    <div class="card-content" style="padding: 0;">
+                        <table class="report-table">
+                            <thead>
+                                <tr>
+                                    <th>Fecha</th>
+                                    <th>Usuario</th>
+                                    <th>Cancha</th>
+                                    <th>Horario</th>
+                                    <th>Duración</th>
+                                    <th>Monto</th>
+                                    <th>Estado</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>15/01/2025</td>
+                                    <td><strong>Juan Pérez</strong></td>
+                                    <td>Fútbol 5 - Cancha A</td>
+                                    <td>14:00 - 16:00</td>
+                                    <td>2 hrs</td>
+                                    <td><strong style="color: #16a34a;">$50,000</strong></td>
+                                    <td><span style="background: #dcfce7; color: #16a34a; padding: 0.25rem 0.5rem; border-radius: 12px; font-size: 0.75rem;">Pagado</span></td>
+                                </tr>
+                                <tr>
+                                    <td>18/01/2025</td>
+                                    <td><strong>María García</strong></td>
+                                    <td>Tenis - Cancha 1</td>
+                                    <td>10:00 - 11:00</td>
+                                    <td>1 hr</td>
+                                    <td><strong style="color: #16a34a;">$30,000</strong></td>
+                                    <td><span style="background: #fef3c7; color: #d97706; padding: 0.25rem 0.5rem; border-radius: 12px; font-size: 0.75rem;">Pendiente</span></td>
+                                </tr>
+                                <tr>
+                                    <td>20/01/2025</td>
+                                    <td><strong>Carlos López</strong></td>
+                                    <td>Básquet - Principal</td>
+                                    <td>20:00 - 22:00</td>
+                                    <td>2 hrs</td>
+                                    <td><strong style="color: #16a34a;">$40,000</strong></td>
+                                    <td><span style="background: #dcfce7; color: #16a34a; padding: 0.25rem 0.5rem; border-radius: 12px; font-size: 0.75rem;">Pagado</span></td>
+                                </tr>
+                                <tr>
+                                    <td>22/01/2025</td>
+                                    <td><strong>Ana Martínez</strong></td>
+                                    <td>Fútbol 5 - Cancha B</td>
+                                    <td>19:00 - 21:00</td>
+                                    <td>2 hrs</td>
+                                    <td><strong style="color: #16a34a;">$50,000</strong></td>
+                                    <td><span style="background: #dcfce7; color: #16a34a; padding: 0.25rem 0.5rem; border-radius: 12px; font-size: 0.75rem;">Pagado</span></td>
+                                </tr>
+                                <tr>
+                                    <td>25/01/2025</td>
+                                    <td><strong>Pedro Rodríguez</strong></td>
+                                    <td>Fútbol 7 - Cancha A</td>
+                                    <td>16:00 - 18:00</td>
+                                    <td>2 hrs</td>
+                                    <td><strong style="color: #16a34a;">$60,000</strong></td>
+                                    <td><span style="background: #dcfce7; color: #16a34a; padding: 0.25rem 0.5rem; border-radius: 12px; font-size: 0.75rem;">Pagado</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- Totales del reporte -->
+                    <div class="report-totals">
+                        <h3 style="margin-bottom: 1rem; color: var(--primary-green);">
+                            <i class="fas fa-calculator"></i> Resumen de Facturación
+                        </h3>
+                        <div class="totals-grid">
+                            <div class="total-item">
+                                <span class="total-label">Subtotal:</span>
+                                <span class="total-value">$2,200,000</span>
+                            </div>
+                            <div class="total-item">
+                                <span class="total-label">IVA (19%):</span>
+                                <span class="total-value">$418,000</span>
+                            </div>
+                            <div class="total-item">
+                                <span class="total-label">Descuentos:</span>
+                                <span class="total-value">-$168,000</span>
+                            </div>
+                            <div class="total-item">
+                                <span class="total-label">TOTAL FACTURADO:</span>
+                                <span class="total-value">$2,450,000</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Acciones de exportación -->
+                    <div class="export-actions">
+                        <button class="btn btn-success" onclick="exportarPDF('facturacion')">
+                            <i class="fas fa-file-pdf"></i> Exportar PDF
+                        </button>
+                        <button class="btn btn-warning" onclick="exportarExcel('facturacion')">
+                            <i class="fas fa-file-excel"></i> Exportar Excel
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="js/reportes.js"></script>
+</body>
+</html>
